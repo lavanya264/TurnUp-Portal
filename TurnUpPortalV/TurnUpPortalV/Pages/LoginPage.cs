@@ -18,7 +18,7 @@ namespace TurnUpPortalV.Pages
             driver.Navigate().GoToUrl("http://horse.industryconnect.io/Account/Login?ReturnUrl=%2f");
             driver.Manage().Window.Maximize();
 
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
 
             driver.FindElement(By.Id("proceed-button")).Click();
 

@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,17 @@ namespace TurnUpPortalV.Pages
         public void CreateTimeRecord(IWebDriver driver)
         {
             //Identify Create new file for Time Record
-            IWebElement createNew = driver.FindElement(By.LinkText("Create New"));
-            createNew.Click();
+            try
+            {
+                IWebElement createNew = driver.FindElement(By.LinkText("Create New"));
+                createNew.Click();
+            }
+            catch(Exception ex)
+            {
+                Assert.Fail("Create new bottun has not been found");
+            }
 
-            Waits.WaitTobeClickable(driver, "ClassName", "k-dropdown-wrap", 2);
+            Waits.WaitTobeClickable(driver, "ClassName", "k-dropdown-wrap", 4);
              // Opens the Typecode dropdown
              IWebElement dropdown = driver.FindElement(By.ClassName("k-dropdown-wrap"));
             dropdown.Click(); // Opens the dropdown
@@ -56,8 +64,9 @@ namespace TurnUpPortalV.Pages
 
 
             Console.WriteLine(lastEnteredCode.Text);
+            Assert.That(lastEnteredCode.Text == "Industry Connect", "New Time Record has not been created");
 
-            if (lastEnteredCode.Text == "Industry Connect")
+           /* if (lastEnteredCode.Text == "Industry Connect")
             {
                 Console.WriteLine("New Time file has Created Successfully");
 
@@ -65,7 +74,7 @@ namespace TurnUpPortalV.Pages
             else
             {
                 Console.WriteLine("New Time file has Not Created successfully");
-            }
+            }*/
             }
         public void EditTimeRecod(IWebDriver driver)
         {
@@ -114,8 +123,9 @@ namespace TurnUpPortalV.Pages
 
             IWebElement typeCode = driver.FindElement(By.XPath("//table//tr[last()]/td[2]"));
             Console.WriteLine(typeCode.Text);
+            Assert.That(typeCode.Text == "M", "Edit Time Record has not been Created!");
 
-            if (typeCode.Text == "M")
+           /* if (typeCode.Text == "M")
             {
                 Console.WriteLine("New Materia file has Created Successfully");
 
@@ -123,7 +133,7 @@ namespace TurnUpPortalV.Pages
             else
             {
                 Console.WriteLine("New Material file has Not Created successfully");
-            }
+            }*/
 
         }
         public void DeleteTimeRecord(IWebDriver driver)
